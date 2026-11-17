@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Crossverse: Bible Crossword</title>
+<meta property="og:title" content="Race me in Crossverse: Bible Crossword">
+<meta property="og:description" content="Same crossword, and whoever finishes a word first wins it. Tap to join.">
+<style>
+  :root { color-scheme: dark; }
+  body { margin: 0; min-height: 100vh; display: flex; align-items: center; justify-content: center;
+         background: linear-gradient(#1b2a5c, #0e1530 55%, #070b1c); color: #fff4dc;
+         font-family: -apple-system, "Segoe UI", Roboto, sans-serif; text-align: center; }
+  main { padding: 28px 22px; max-width: 420px; }
+  h1 { font-family: Georgia, serif; font-size: 34px; margin: 0 0 6px; }
+  p { color: #a9b4cc; font-size: 17px; line-height: 1.5; margin: 8px 0; }
+  .code { display: flex; gap: 8px; justify-content: center; margin: 18px 0 6px; }
+  .code span { width: 46px; height: 46px; border-radius: 12px; background: #f2b84b; color: #0e1526;
+               font-weight: 900; font-size: 24px; display: flex; align-items: center; justify-content: center; }
+  a.btn { display: block; margin: 12px 0; padding: 15px; border-radius: 16px; background: #f2b84b; color: #0e1526;
+          font-weight: 800; font-size: 18px; text-decoration: none; }
+  a.quiet { background: #24335a; color: #fff4dc; }
+  .hide { display: none; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Crossverse</h1>
+  <p id="lead">A Bible crossword you can race with friends.</p>
+  <div id="race" class="hide">
+    <p>Your friend's race code</p>
+    <div class="code" id="code"></div>
+    <a class="btn" id="open" href="#">Open the race in Crossverse</a>
+    <p>Don't have the app yet? Get it, then open it, tap "Race a friend" and type the code.</p>
+  </div>
+  <a class="btn quiet" id="play" href="https://play.google.com/store/apps/details?id=com.crossverse.app">Get it on Google Play</a>
+  <p id="es" class="hide"></p>
+</main>
+<script>
+  // The race code travels in the link as ?race=ABC23. Nothing is sent anywhere: this page only shows it.
+  var m = /[?&]race=([2-9A-HJKMNP-Za-hjkmnp-z]{5})(?:&|$)/.exec(location.search);
+  if (m) {
+    var code = m[1].toUpperCase();
+    document.getElementById("lead").textContent = "You've been invited to a race!";
+    document.getElementById("race").className = "";
+    var box = document.getElementById("code");
+    for (var i = 0; i < code.length; i++) { var s = document.createElement("span"); s.textContent = code[i]; box.appendChild(s); }
+    document.getElementById("open").href = "crossverse://play?race=" + code;
+    document.getElementById("play").href = "https://play.google.com/store/apps/details?id=com.crossverse.app&referrer=" + encodeURIComponent("race=" + code);
+  }
+</script>
+</body>
+</html>

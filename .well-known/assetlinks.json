@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.crossverse.app",
+      "sha256_cert_fingerprints": [
+        "C2:26:7B:A5:A9:4E:98:A1:1E:C0:4E:86:D4:CD:23:37:BE:32:27:37:0C:CB:24:54:FA:DA:6B:6F:38:1F:16:43"
+      ]
+    }
+  }
+]
