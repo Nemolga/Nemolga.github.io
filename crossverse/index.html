@@ -28,25 +28,34 @@
   <h1>Crossverse</h1>
   <p id="lead">A Bible crossword you can race with friends.</p>
   <div id="race" class="hide">
-    <p>Your friend's race code</p>
+    <p id="label">Your friend's race code</p>
     <div class="code" id="code"></div>
     <a class="btn" id="open" href="#">Open the race in Crossverse</a>
-    <p>Don't have the app yet? Get it, then open it, tap "Race a friend" and type the code.</p>
+    <p id="help">Don't have the app yet? Get it, then open it, tap "Race a friend" and type the code.</p>
   </div>
   <a class="btn quiet" id="play" href="https://play.google.com/store/apps/details?id=com.crossverse.app">Get it on Google Play</a>
   <p id="es" class="hide"></p>
 </main>
 <script>
-  // The race code travels in the link as ?race=ABC23. Nothing is sent anywhere: this page only shows it.
+  // A race code travels as ?race=ABC23, a friend code as ?friend=ABC234. Nothing is sent anywhere: this page only shows it.
   var m = /[?&]race=([2-9A-HJKMNP-Za-hjkmnp-z]{5})(?:&|$)/.exec(location.search);
-  if (m) {
-    var code = m[1].toUpperCase();
-    document.getElementById("lead").textContent = "You've been invited to a race!";
+  var f = /[?&]friend=([2-9A-HJKMNP-Za-hjkmnp-z]{6})(?:&|$)/.exec(location.search);
+  var kind = m ? "race" : (f ? "friend" : null);
+  if (kind) {
+    var code = (m || f)[1].toUpperCase();
+    if (kind === "race") {
+      document.getElementById("lead").textContent = "You've been invited to a race!";
+    } else {
+      document.getElementById("lead").textContent = "A friend wants to add you in Crossverse!";
+      document.getElementById("label").textContent = "Your friend's code";
+      document.getElementById("open").textContent = "Add my friend in Crossverse";
+      document.getElementById("help").textContent = "Don't have the app yet? Get it, then open it, tap \"Friends\" and type the code.";
+    }
     document.getElementById("race").className = "";
     var box = document.getElementById("code");
     for (var i = 0; i < code.length; i++) { var s = document.createElement("span"); s.textContent = code[i]; box.appendChild(s); }
-    document.getElementById("open").href = "crossverse://play?race=" + code;
-    document.getElementById("play").href = "https://play.google.com/store/apps/details?id=com.crossverse.app&referrer=" + encodeURIComponent("race=" + code);
+    document.getElementById("open").href = "crossverse://play?" + kind + "=" + code;
+    document.getElementById("play").href = "https://play.google.com/store/apps/details?id=com.crossverse.app&referrer=" + encodeURIComponent(kind + "=" + code);
   }
 </script>
 </body>
